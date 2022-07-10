@@ -73,3 +73,17 @@ app.post('/register', async (req,res) => {
       message: 'User successfully created'
     })
 });
+app.post('/login', async (req,res) => {
+    const { username, password } = req.body
+    const user = await User.findOne({ username }).exec();
+    if(!user || user.password !== password){
+      res.status(500)
+      res.json({
+        message: 'Invalid login or password'
+      })
+      return;
+    }
+    res.json({
+      message: 'success'
+    })
+});
