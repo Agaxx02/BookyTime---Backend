@@ -87,4 +87,8 @@ app.post('/login', async (req,res) => {
       message: 'success'
     })
 });
+app.post('/addBook', async (req,res) => {
+  const book  = req.body
+  const user = await User.findOne({ username }).exec();
+})
 
