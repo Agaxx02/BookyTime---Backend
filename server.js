@@ -16,6 +16,16 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', userSchema)
 
+const bookSchema = new mongoose.Schema({
+  userId: mongoose.Schema.ObjectId,
+  book: {
+    title: String,
+    author: String,
+    numOfPages: Number
+  }
+})
+const Book = mongoose.model('Book', bookSchema)
+
 const connectDB = async () => {
     try {
       const conn = await mongoose.connect(process.env.DB_STRING, {
@@ -88,7 +98,7 @@ app.post('/login', async (req,res) => {
     })
 });
 app.post('/addBook', async (req,res) => {
-  const book  = req.body
+  const { title, author, numOfPages}  = req.body
   const user = await User.findOne({ username }).exec();
 })
 
