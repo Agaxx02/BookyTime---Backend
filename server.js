@@ -16,15 +16,15 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', userSchema)
 
-const bookSchema = new mongoose.Schema({
+const booksSchema = new mongoose.Schema({
   userId: mongoose.Schema.ObjectId,
-  book: {
+  books: [{
     title: String,
     author: String,
     numOfPages: Number
-  }
+  },],
 })
-const Book = mongoose.model('Book', bookSchema)
+const Books = mongoose.model('Books', booksSchema)
 
 const connectDB = async () => {
     try {
@@ -97,8 +97,29 @@ app.post('/login', async (req,res) => {
       message: 'success'
     })
 });
-app.post('/addBook', async (req,res) => {
-  const { title, author, numOfPages}  = req.body
-  const user = await User.findOne({ username }).exec();
+app.post('/books', async (req,res) => {
+ const { authorization } = req.headers;
+ const [, token] = authorization.split(' ');
+ const [username, password] = token.split(':');
+ const booksItems = req.body;
+ const user = await User.findOne({ username }).exec();
+ if(!user || user.password !== password){
+  res.status(403);
+  res.json({
+    message: 'invalid access',
+  })
+  return
+ }
+ const books = await Books.findOne({ userId: user._id }).exec();
+ if(!books){
+  await Books.create({
+    userId: user._id,
+    books: booksItems,
+  })
+ }else{
+  books = booksItems;
+  await books.save()
+ }
+ res.json('success')
 })
 
