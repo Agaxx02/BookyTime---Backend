@@ -117,9 +117,10 @@ app.post('/books', async (req,res) => {
     books: booksItems,
   })
  }else{
-  books = booksItems;
-  await books.save()
+  let newBooks = books
+  newBooks = booksItems;
+  await newBooks.save()
  }
- res.json('success')
+ res.json()
 })
 
