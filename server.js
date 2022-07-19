@@ -98,29 +98,32 @@ app.post('/login', async (req,res) => {
     })
 });
 app.post('/books', async (req,res) => {
- const { authorization } = req.headers;
- const [, token] = authorization.split(' ');
- const [username, password] = token.split(':');
- const booksItems = req.body;
- const user = await User.findOne({ username }).exec();
- if(!user || user.password !== password){
-  res.status(403);
   res.json({
-    message: 'invalid access',
+    message: 'we are here'
   })
-  return
- }
- const books = await Books.findOne({ userId: user._id }).exec();
- if(!books){
-  await Books.create({
-    userId: user._id,
-    books: booksItems,
-  })
- }else{
-  let newBooks = books
-  newBooks = booksItems;
-  await newBooks.save()
- }
- res.json()
+//  const { authorization } = req.headers;
+//  const [, token] = authorization.split(' ');
+//  const [username, password] = token.split(':');
+//  const booksItems = req.body;
+//  const user = await User.findOne({ username }).exec();
+//  if(!user || user.password !== password){
+//   res.status(403);
+//   res.json({
+//     message: 'invalid access',
+//   })
+//   return
+//  }
+//  const books = await Books.findOne({ userId: user._id }).exec();
+//  if(!books){
+//   await Books.create({
+//     userId: user._id,
+//     books: booksItems,
+//   })
+//  }else{
+//   let newBooks = books
+//   newBooks = booksItems;
+//   await newBooks.save()
+//  }
+//  res.json(newBooks)
 })
 
