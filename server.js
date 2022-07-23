@@ -98,9 +98,8 @@ app.post('/login', async (req,res) => {
     })
 });
 app.post('/books', async (req,res) => {
-  res.json({
-    message: 'we are here'
-  })
+  let book = req.body
+  res.send(book)
 //  const { authorization } = req.headers;
 //  const [, token] = authorization.split(' ');
 //  const [username, password] = token.split(':');
