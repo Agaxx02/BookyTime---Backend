@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
 const User = mongoose.model('User', userSchema);
 
 const booksSchema = new mongoose.Schema({
-	userId: mongoose.Schema.ObjectId,
+	username: String,
 	books: [
 		{
 			title: String,
@@ -113,15 +113,15 @@ app.post('/books', async (req, res) => {
 		});
 		return;
 	}
-	const books = await Books.findOne({ userId: user._id }).exec();
+	const books = await Books.findOne({ username: user.username }).exec();
 	if (!books) {
 		await Books.create({
-			userId: user._id,
+			username: user.username,
 			books: booksItems,
 		});
 	} else {
-		books.books = booksItems;
-		await books.save();
+		books['books'] = booksItems;
+		books.save();
 	}
 	res.send(books);
 });
@@ -130,7 +130,6 @@ app.get('/books', async (req, res) => {
 	const { authorization } = req.headers;
 	const [, token] = authorization.split(' ');
 	const [username, password] = token.split(':');
-	const booksItems = req.body;
 	const user = await User.findOne({ username }).exec();
 	if (!user || user.password !== password) {
 		res.status(403);
@@ -139,7 +138,7 @@ app.get('/books', async (req, res) => {
 		});
 		return;
 	}
-	const books = await Books.findOne({ userId: user._id }).exec();
+	const books = await Books.findOne({ username: user.username }).exec();
 	if (!books) {
 		res.json([]);
 	} else {
