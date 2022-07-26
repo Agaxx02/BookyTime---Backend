@@ -23,6 +23,7 @@ const booksSchema = new mongoose.Schema({
 			title: String,
 			author: String,
 			numOfPages: Number,
+			cover: String,
 		},
 	],
 });
