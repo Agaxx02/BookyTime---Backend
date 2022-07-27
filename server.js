@@ -140,9 +140,5 @@ app.get('/books', async (req, res) => {
 		return;
 	}
 	const books = await Books.findOne({ username: user.username }).exec();
-	if (!books) {
-		res.json([]);
-	} else {
-		res.json(books);
-	}
+	res.json(books);
 });
