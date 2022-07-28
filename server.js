@@ -141,3 +141,21 @@ app.get('/books', async (req, res) => {
 	const books = await Books.findOne({ username: user.username }).exec();
 	res.json(books);
 });
+app.put('/deleteBook', async (req, res) => {
+	const { authorization } = req.headers;
+	const [, token] = authorization.split(' ');
+	const [username, password] = token.split(':');
+	const newBooks = req.body;
+	const user = await User.findOne({ username }).exec();
+	if (!user || user.password !== password) {
+		res.status(403);
+		res.json({
+			message: 'invalid access',
+		});
+		return;
+	}
+	const books = await Books.findOne({ username: user.username }).exec();
+	books.books = newBooks;
+	books.save();
+	res.send(newBooks);
+});
