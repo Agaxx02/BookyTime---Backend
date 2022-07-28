@@ -11,7 +11,6 @@ const ObjectId = require('mongoose').Types.ObjectId;
 const userSchema = new mongoose.Schema({
 	username: String,
 	password: String,
-	confirmPassword: String,
 });
 
 const User = mongoose.model('User', userSchema);
@@ -23,7 +22,7 @@ const booksSchema = new mongoose.Schema({
 			title: String,
 			author: String,
 			numOfPages: Number,
-			cover: String,
+			cover: String || null,
 		},
 	],
 });
