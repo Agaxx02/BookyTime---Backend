@@ -23,6 +23,8 @@ const booksSchema = new mongoose.Schema({
 			author: String,
 			numOfPages: Number,
 			cover: String || null,
+			rate: Number || null,
+			read: Boolean,
 		},
 	],
 });
@@ -139,7 +141,11 @@ app.get('/books', async (req, res) => {
 		return;
 	}
 	const books = await Books.findOne({ username: user.username }).exec();
-	res.json(books);
+	if (!books) {
+		res.json([]);
+	} else {
+		res.json(books);
+	}
 });
 app.put('/deleteBook', async (req, res) => {
 	const { authorization } = req.headers;
