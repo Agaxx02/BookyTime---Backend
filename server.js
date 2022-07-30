@@ -25,6 +25,8 @@ const booksSchema = new mongoose.Schema({
 			cover: String || null,
 			rate: Number || null,
 			read: Boolean,
+			comment: String,
+			date: Date,
 		},
 	],
 });
