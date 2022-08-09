@@ -4,7 +4,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const PORT = 8000;
 
-require('dotenv').config({ path: './config/.env' });
+require('dotenv').config({ path: 'config/.env' });
 
 const ObjectId = require('mongoose').Types.ObjectId;
 
@@ -59,10 +59,10 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/', (req, res) => {
-	res.sendFile(__dirname + '/index.html');
+	res.sendFile('/index.html');
 });
 
-app.post('/register', async (req, res) => {
+app.post('/registerUser', async (req, res) => {
 	const { username, password, confirmPassword } = req.body;
 	const user = await User.findOne({ username }).exec();
 	if (user) {
@@ -90,7 +90,7 @@ app.post('/register', async (req, res) => {
 		message: 'User successfully created',
 	});
 });
-app.post('/login', async (req, res) => {
+app.post('/loginUser', async (req, res) => {
 	const { username, password } = req.body;
 	const user = await User.findOne({ username }).exec();
 	if (!user || user.password !== password) {
@@ -104,7 +104,7 @@ app.post('/login', async (req, res) => {
 		message: 'success',
 	});
 });
-app.post('/books', async (req, res) => {
+app.post('/addBooks', async (req, res) => {
 	const { authorization } = req.headers;
 	const [, token] = authorization.split(' ');
 	const [username, password] = token.split(':');
@@ -117,7 +117,9 @@ app.post('/books', async (req, res) => {
 		});
 		return;
 	}
-	const books = await Books.findOne({ username: user.username }).exec();
+	const books = await Books.findOne({
+		username: user.username,
+	}).exec();
 	if (!books) {
 		await Books.create({
 			username: user.username,
@@ -130,7 +132,7 @@ app.post('/books', async (req, res) => {
 	res.send(books);
 });
 
-app.get('/books', async (req, res) => {
+app.get('/getBooks', async (req, res) => {
 	const { authorization } = req.headers;
 	const [, token] = authorization.split(' ');
 	const [username, password] = token.split(':');
@@ -142,7 +144,9 @@ app.get('/books', async (req, res) => {
 		});
 		return;
 	}
-	const books = await Books.findOne({ username: user.username }).exec();
+	const books = await Books.findOne({
+		username: user.username,
+	}).exec();
 	if (!books) {
 		res.json([]);
 	} else {
@@ -162,7 +166,9 @@ app.put('/deleteBook', async (req, res) => {
 		});
 		return;
 	}
-	const books = await Books.findOne({ username: user.username }).exec();
+	const books = await Books.findOne({
+		username: user.username,
+	}).exec();
 	books.books = newBooks;
 	books.save();
 	res.send(newBooks);
