@@ -4,7 +4,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const PORT = 8000;
 
-require('dotenv').config({ path: './config/.env' });
+require('dotenv').config({ path: 'config/.env' });
 
 const ObjectId = require('mongoose').Types.ObjectId;
 
@@ -59,7 +59,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/', (req, res) => {
-	res.sendFile('/index.html');
+	res.sendFile(__dirname + '/index.html');
 });
 
 app.post('/registerUser', async (req, res) => {
