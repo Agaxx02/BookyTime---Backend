@@ -20,7 +20,6 @@ app.use(express.json());
 app.use('/', homeRoutes);
 app.use('/login', loginRoutes);
 app.use('/register', registerRoutes);
-app.use('/dashboard', booksRoutes);
 app.use('/library', booksRoutes);
 
 //Execute app
