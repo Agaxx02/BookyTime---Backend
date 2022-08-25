@@ -11,8 +11,8 @@ const booksSchema = new mongoose.Schema({
 			rate: Number || null,
 			read: Boolean,
 			comment: String,
-			dateAdded: String,
-			lastUpdated: String || null,
+			dateAdded: Date || Object,
+			lastUpdated: Date || Object || null,
 		},
 	],
 });
