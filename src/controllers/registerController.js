@@ -24,7 +24,12 @@ module.exports = {
 			});
 			return;
 		}
-		await User.create({ username, password });
+		await User.create({
+			username,
+			password,
+			picture: 'https://i.ibb.co/zJYgcDV/znak-zapytania.webp',
+			goal: 0,
+		});
 		res.json({
 			message: 'User successfully created',
 		});
