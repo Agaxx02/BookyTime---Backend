@@ -12,7 +12,8 @@ module.exports = {
 			return;
 		}
 		res.json({
-			message: 'success',
+			picture: user.picture,
+			goal: user.goal,
 		});
 	},
 };
