@@ -16,8 +16,7 @@ module.exports = {
 		}
 		user[key] = value;
 		user.save();
-
-		res.json({
+		res.send({
 			username: user.username,
 			password: user.password,
 			picture: user.picture,
