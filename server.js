@@ -1,15 +1,15 @@
-import express from 'express';
+const express = require('express');
 const app = express();
-import cors from 'cors';
-import mongoose from 'mongoose';
-import connectDB from './config/database';
+const cors = require('cors');
+const mongoose = require('mongoose');
+const connectDB = require('./config/database');
 
 //routes
-import homeRoutes from './src/routes/homeRoutes';
-import loginRoutes from './src/routes/loginRoutes';
-import registerRoutes from './src/routes/registerRoutes';
-import booksRoutes from './src/routes/booksRoutes';
-import profileRoutes from './src/routes/profileRoutes';
+const homeRoutes = require('./src/routes/homeRoutes');
+const loginRoutes = require('./src/routes/loginRoutes');
+const registerRoutes = require('./src/routes/registerRoutes');
+const booksRoutes = require('./src/routes/booksRoutes');
+const profileRoutes = require('./src/routes/profileRoutes');
 
 require('dotenv').config({ path: 'config/.env' });
 
